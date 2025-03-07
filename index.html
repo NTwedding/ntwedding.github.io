@@ -724,7 +724,7 @@
                             <div class="parent-name">Ông - Bà</div>
                             <div class="parent-name">TRẦN THANH SANG</div>
                             <div class="parent-name">NGUYỄN THỊ THU THẢO</div>
-                            <div class="parent-address">20B Đặng Thị Sữa, Ấp 3A, Xã Tân Thạnh Tây, Huyện Củ Chi, TP. HCM</div>
+                            <div class="parent-address">20B Đặng Thị Siêu, Ấp 3A, Xã Tân Thạnh Tây, Huyện Củ Chi, TP. HCM</div>
                         </div>
                     </div>
                     
@@ -796,7 +796,7 @@
             <!-- Page 4: QR Code -->
             <div class="page qr-page" id="page-4">
                 <div class="page-content">
-                   <div class="qr-code" id="qr-code">
+                    <div class="qr-code" id="qr-code">
                         <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
                             <rect width="200" height="200" fill="white"/>
                             <path fill="#93404D" d="M10,10V30H30V10ZM25,25H15V15H25ZM40,10V20H50V30H60V20H70V10ZM65,15H45V25H55V15ZM80,10V30H90V20H100V30H110V10ZM105,15H85V25H95V15ZM40,40V50H60V40ZM70,40V60H80V40ZM90,40V50H100V40ZM130,10V30H150V10ZM145,25H135V15H145ZM160,10V20H170V10ZM180,10V20H190V30H170V40H190V30H200V20H210V10ZM205,15H185V25H195V15ZM160,30V50H170V30ZM180,40V50H190V40ZM220,10V20H230V30H220V40H240V10ZM235,35H225V25H235ZM10,40V60H30V40ZM25,55H15V45H25ZM40,60V70H50V60ZM60,60V80H70V70H80V60ZM75,65H65V75H75ZM90,60V70H110V80H60V90H70V100H80V90H100V110H70V120H80V130H60V120H50V140H40V120H50V110H40V100H50V90H40V80H50V70H90V60ZM105,65H95V75H105ZM120,60V70H130V60ZM170,60V70H180V60ZM190,60V70H200V80H190V90H200V80H210V90H220V80H230V70H240V60ZM235,65H195V75H235ZM130,70V90H140V70ZM150,80V90H170V100H180V90H190V110H170V120H190V130H200V140H210V130H220V140H230V130H240V110H230V120H220V110H210V100H200V110H180V80ZM175,85H155V95H175ZM70,130V140H80V130ZM90,130V140H110V150H120V140H130V130ZM125,135H95V145H125ZM150,130V140H160V130ZM170,130V140H190V150H200V140H210V130ZM205,135H175V145H205ZM10,140V160H30V140ZM25,155H15V145H25ZM40,140V150H50V140ZM60,140V150H80V160H60V170H40V180H30V190H40V200H50V210H40V220H50V230H60V240H80V230H70V220H80V210H90V200H100V210H110V220H120V230H110V240H130V220H140V200H130V190H140V180H120V190H110V180H100V170H80V150H90V140ZM85,145H65V155H85ZM170,140V150H180V140ZM200,150V160H210V150ZM220,140V150H230V140ZM120,150V160H130V150ZM140,150V160H150V170H160V180H170V170H180V160H190V170H210V180H220V190H210V200H220V190H230V180H240V170H230V160H220V170H200V160H190V150ZM185,155H145V165H185ZM50,180V190H60V180ZM160,180V190H170V180ZM180,180V190H190V180ZM200,180V190H210V180ZM170,190V200H180V190ZM220,200V210H230V200ZM140,210V220H150V210ZM160,210V220H170V210ZM180,210V220H190V230H170V240H190V230H200V220H210V210ZM205,215H185V225H205ZM220,210V220H230V210ZM140,230V240H150V230ZM210,230V240H220V230Z"/>
@@ -842,23 +842,8 @@
             const totalPages = pages.length;
             
             // Map URL when QR is clicked
-            const mapUrl = "https://maps.app.goo.gl/5tvGG48euzNCs4b88"; // Replace with actual map URL
-             // Tạo mã QR
-    const qrCodeElement = document.getElementById('qr-code');
-    new QRCode(qrCodeElement, {
-        text: mapUrl,
-        width: 200,
-        height: 200,
-        colorDark: "#93404D", // Màu sắc phù hợp với thiết kế của bạn
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-    });
-
-    // Thêm sự kiện click để mở liên kết khi nhấp vào mã QR
-    qrCodeElement.addEventListener('click', function() {
-        window.open(mapUrl, '_blank');
-    });
-});
+            const mapUrl = "https://goo.gl/maps/example"; // Replace with actual map URL
+            
             // Create falling petals
             function createPetals() {
                 const petalColors = ['#93404D', '#b76d78', '#d9a6ac'];
@@ -1104,7 +1089,6 @@
                 }, 1000);
             }, 3000);
         });
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
     </script>
 </body>
 </html>
