@@ -33,6 +33,669 @@
             background-color: var(--background-color);
         }
 
+        /* Fullscreen container */
+        .fullscreen-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Instruction banner */
+        .instruction {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(147, 64, 77, 0.9);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        /* Card Container - maintains aspect ratio */
+        .card-container {
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            height: 90vh;
+            max-height: 700px;
+            perspective: 2000px;
+            z-index: 10;
+        }
+
+        @media (min-width: 768px) {
+            .card-container {
+                width: 400px;
+                height: 700px;
+            }
+        }
+
+        /* Card pages */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            backface-visibility: hidden;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1), 
+                        opacity 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+            will-change: transform, opacity;
+        }
+
+        .page-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .page-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Page states */
+        .page {
+            opacity: 0;
+            visibility: hidden;
+            transform: rotateY(40deg) translateZ(-300px);
+            pointer-events: none;
+        }
+
+        .page.active {
+            opacity: 1;
+            visibility: visible;
+            transform: rotateY(0) translateZ(0);
+            z-index: 10;
+            pointer-events: all;
+        }
+
+        .page.prev {
+            transform: rotateY(-80deg) translateZ(-100px);
+            opacity: 0;
+            z-index: 8;
+        }
+
+        .page.next {
+            transform: rotateY(80deg) translateZ(-100px);
+            opacity: 0;
+            z-index: 8;
+        }
+        
+        /* Prevent scrolling on pages */
+        .page-content {
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            background-color: var(--light-primary);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Page indicators */
+        .page-indicators {
+            position: fixed;
+            bottom: 80px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(147, 64, 77, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: var(--primary-color);
+        }
+
+        /* Content Styling */
+        .save-date {
+            font-size: 18px;
+            letter-spacing: 3px;
+            font-weight: 600;
+            opacity: 0;
+            animation: slideUp 1s 0.5s forwards;
+            margin-top: 10px;
+        }
+
+        .names {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .name-large {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin: 5px 0;
+            opacity: 0;
+            animation: slideUp 1s 0.8s forwards;
+        }
+
+        .and {
+            font-family: 'Great Vibes', cursive;
+            font-size: 30px;
+            margin: 8px 0;
+            opacity: 0;
+            animation: fadeIn 1.5s 1s forwards;
+        }
+
+        .date {
+            font-size: 26px;
+            font-weight: 600;
+            margin: 15px 0;
+            opacity: 0;
+            animation: slideUp 1s 1.2s forwards;
+        }
+
+        .invitation {
+            font-size: 20px;
+            margin: 20px 0 10px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s 1.4s forwards;
+        }
+
+        .dotted-line {
+            width: 80%;
+            height: 1px;
+            border-top: 1px dotted var(--primary-color);
+            opacity: 0;
+            margin: 10px auto;
+            animation: expandWidth 1.5s 1.6s forwards;
+        }
+
+        /* Parents section */
+        .parents-info {
+            margin: 20px 0;
+            opacity: 0;
+            animation: fadeIn 1s 0.5s forwards;
+        }
+
+        .parent-group {
+            margin-bottom: 20px;
+        }
+
+        .parent-name {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .parent-address {
+            font-size: 14px;
+            line-height: 1.3;
+            color: var(--secondary-text);
+        }
+
+        /* Ceremony details */
+        .announcement {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.4;
+            opacity: 0;
+            animation: fadeIn 1s 0.7s forwards;
+        }
+
+        .center-names {
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s 0.9s forwards;
+        }
+
+        .bride-groom-title {
+            font-size: 16px;
+            margin: 3px 0;
+        }
+
+        .ceremony-details {
+            text-align: center;
+            margin: 15px 0;
+            opacity: 0;
+            animation: fadeIn 1s 1.1s forwards;
+        }
+
+        .ceremony-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .time {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+
+        .lunar-date {
+            font-size: 16px;
+            margin: 5px 0;
+            font-style: italic;
+            color: var(--secondary-text);
+        }
+
+        /* Reception details */
+        .reception {
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s 0.5s forwards;
+        }
+
+        .venue {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0 3px;
+        }
+
+        .venue-address {
+            font-size: 16px;
+            margin: 6px 0;
+            line-height: 1.4;
+        }
+
+        .reception-time {
+            margin: 15px 0;
+        }
+
+        .time-large {
+            font-size: 40px;
+            font-weight: 700;
+            margin: 15px 0;
+            color: var(--primary-color);
+        }
+
+        .additional-info {
+            font-size: 16px;
+            margin: 5px 0;
+            color: var(--primary-color);
+        }
+
+        .kinhMoi {
+            font-weight: 600;
+            font-size: 18px;
+            margin-top: 15px;
+            color: var(--primary-color);
+        }
+
+        /* QR section */
+        .qr-page {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qr-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 1s 0.5s forwards;
+            color: var(--primary-color);
+        }
+
+        .qr-code {
+            width: 220px;
+            height: 220px;
+            margin: 10px 0 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: scaleIn 1s 0.7s forwards;
+            position: relative;
+        }
+
+        .qr-code:hover {
+            transform: scale(1.05);
+        }
+
+        .qr-text {
+            font-size: 20px;
+            line-height: 1.5;
+            max-width: 300px;
+            margin-top: 15px;
+            opacity: 0;
+            animation: fadeIn 1s 0.9s forwards;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Background elements */
+        .bg-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* Falling flowers/petals */
+        .petal {
+            position: absolute;
+            background-repeat: no-repeat;
+            background-size: contain;
+            pointer-events: none;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Flower decorations */
+        .decoration {
+            position: absolute;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .floral-top-right {
+            top: 5px;
+            right: 5px;
+            width: 130px;
+            height: 180px;
+            opacity: 0;
+            animation: fadeIn 1.5s 1.8s forwards, float 6s ease-in-out infinite;
+        }
+
+        .floral-bottom-left {
+            bottom: 10px;
+            left: 10px;
+            width: 80px;
+            height: 80px;
+            transform: rotate(180deg);
+            opacity: 0;
+            animation: fadeIn 1.5s 2s forwards, float 7s ease-in-out infinite;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%2393404D' d='M50,90 C100,65 90,10 50,30 C10,10 0,65 50,90 Z' /></svg>") no-repeat;
+            background-size: contain;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes expandWidth {
+            from { 
+                opacity: 0;
+                width: 0;
+            }
+            to { 
+                opacity: 0.5;
+                width: 80%;
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        @keyframes scaleIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fallingPetal {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatingHeart {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-height: 700px) {
+            .card-container {
+                height: 88vh;
+            }
+            
+            .page {
+                padding: 15px;
+            }
+            
+            .name-large {
+                font-size: 30px;
+            }
+            
+            .and {
+                font-size: 26px;
+                margin: 6px 0;
+            }
+            
+            .date {
+                font-size: 22px;
+                margin: 12px 0;
+            }
+            
+            .nav-container {
+                bottom: 10px;
+            }
+            
+            .page-indicators {
+                bottom: 70px;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .page {
+                padding: 15px;
+            }
+            
+            .name-large {
+                font-size: 32px;
+            }
+            
+            .and {
+                font-size: 26px;
+            }
+            
+            .save-date {
+                font-size: 16px;
+            }
+            
+            .invitation {
+                font-size: 20px;
+            }
+            
+            .venue {
+                font-size: 24px;
+            }
+            
+            .time-large {
+                font-size: 30px;
+            }
+            
+            .qr-code {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        /* Special animation for landscape mode on mobile */
+        @media (max-height: 450px) and (orientation: landscape) {
+            .card-container {
+                height: 90vh;
+                width: 60%;
+                max-width: 300px;
+            }
+            
+            .page {
+                padding: 15px;
+            }
+            
+            .name-large {
+                font-size: 30px;
+            }
+            
+            .and {
+                font-size: 24px;
+                margin: 5px 0;
+            }
+            
+            .instruction {
+                font-size: 14px;
+                padding: 5px;
+            }
+        }
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #93404D;
+            --light-primary: #b76d78;
+            --background-color: #f9f3f5;
+            --card-bg: #ffffff;
+            --text-color: #93404D;
+            --secondary-text: #333333;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
         .fullscreen-container {
             position: absolute;
             top: 0;
