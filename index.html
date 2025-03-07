@@ -21,109 +21,40 @@
             box-sizing: border-box;
         }
 
-        /* Đảm bảo rằng body chiếm toàn bộ chiều cao của màn hình */
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-}
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem 0.5rem;
+        }
 
-/* Đảm bảo rằng container chiếm toàn bộ chiều cao của màn hình */
-.container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-}
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+        }
 
-/* Điều chỉnh kích thước của invitation-container */
-.invitation-container {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+            perspective: 2000px;
+        }
 
-/* Điều chỉnh kích thước của invitation-card */
-.invitation-card {
-    width: 100%;
-    height: 100%;
-    padding-bottom: 0; /* Loại bỏ padding-bottom để chiếm toàn bộ chiều cao */
-}
-
-/* Điều chỉnh kích thước của card-face */
-.card-face {
-    width: 100%;
-    height: 100%;
-    border-radius: 0; /* Loại bỏ border-radius để chiếm toàn bộ màn hình */
-}
-
-/* Điều chỉnh kích thước của card-front-content */
-.card-front-content {
-    width: 100%;
-    height: 100%;
-    padding: 1rem; /* Giảm padding để nội dung không bị tràn */
-}
-
-/* Điều chỉnh kích thước của envelope-inner */
-.envelope-inner {
-    width: 100%;
-    height: 100%;
-    padding: 1rem; /* Giảm padding để nội dung không bị tràn */
-}
-
-/* Điều chỉnh kích thước font chữ và khoảng cách */
-.couple-name {
-    font-size: 2.5rem; /* Tăng kích thước font chữ */
-}
-
-.event-date {
-    font-size: 1.8rem; /* Tăng kích thước font chữ */
-}
-
-.invitation-text {
-    font-size: 1.2rem; /* Tăng kích thước font chữ */
-}
-
-/* Media queries để điều chỉnh giao diện trên các thiết bị khác nhau */
-@media (max-width: 768px) {
-    .couple-name {
-        font-size: 2rem; /* Giảm kích thước font chữ trên thiết bị nhỏ */
-    }
-
-    .event-date {
-        font-size: 1.5rem; /* Giảm kích thước font chữ trên thiết bị nhỏ */
-    }
-
-    .invitation-text {
-        font-size: 1rem; /* Giảm kích thước font chữ trên thiết bị nhỏ */
-    }
-}
-
+        /* 3D Card Styles */
         .invitation-card {
             position: relative;
             width: 100%;
-            height: 0;
-            padding-bottom: 65%; /* Aspect ratio for card */
+            height: 85vh;
+            max-height: 650px;
             transform-style: preserve-3d;
             transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @media (min-width: 768px) {
-            .invitation-card {
-                padding-bottom: 50%;
-            }
         }
 
         .invitation-card.open {
@@ -138,33 +69,20 @@ body {
             border-radius: 1rem;
             overflow: hidden;
             box-shadow: 0 10px 30px var(--shadow-color);
-            transition: all 0.3s ease;
         }
 
-        .card-front,
-        .qr-page {
+        .card-front {
             background-color: var(--card-color);
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .qr-page {
-            transform: rotateX(180deg);
             z-index: 1;
         }
 
-        .page-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .card-back {
+            background-color: var(--card-color);
+            transform: rotateY(180deg);
+            overflow: hidden;
         }
 
-        .page-container.show-qr {
-            transform: rotateX(180deg);
-        }
-
+        /* Front Card Content */
         .card-front-content {
             position: relative;
             width: 100%;
@@ -245,109 +163,121 @@ body {
             opacity: 0.7;
         }
 
-        .qr-content {
+        /* Multi-page system */
+        .pages-container {
             position: relative;
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .qr-code {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 1.5rem;
-            background-color: #e5e7eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .qr-text {
-            font-size: 1rem;
-            color: var(--primary-color);
-            max-width: 250px;
-            line-height: 1.6;
-        }
-
-        .card-back {
-            background-color: var(--card-color);
-            transform: rotateY(180deg);
-            display: flex;
-            flex-direction: column;
-        }
-
-        @media (min-width: 768px) {
-            .card-back {
-                flex-direction: row;
-            }
+            overflow: hidden;
         }
 
         .page {
-            flex: 1;
-            padding: 1.75rem 1.5rem;
-            border: 1px solid var(--secondary-color);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 1.5rem;
             background-color: var(--card-color);
+            transition: transform 0.5s ease;
             overflow-y: auto;
+        }
+
+        .page.active {
+            transform: translateX(0);
+            z-index: 2;
+        }
+
+        .page.left {
+            transform: translateX(-100%);
+            z-index: 1;
+        }
+
+        .page.right {
+            transform: translateX(100%);
+            z-index: 1;
+        }
+
+        .page-content {
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--secondary-color);
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-navigation {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding: 0.5rem 0;
         }
 
-        @media (max-width: 767px) {
-            .page:first-child {
-                border-bottom: none;
-                border-radius: 1rem 1rem 0 0;
-            }
-            
-            .page:last-child {
-                border-radius: 0 0 1rem 1rem;
-            }
+        .page-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.5rem;
         }
 
-        @media (min-width: 768px) {
-            .page:first-child {
-                border-right: none;
-                border-radius: 1rem 0 0 1rem;
-            }
-            
-            .page:last-child {
-                border-radius: 0 1rem 1rem 0;
-            }
+        .page-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(165, 59, 62, 0.3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.3);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin: 0 0 1rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--primary-color);
+            opacity: 0.3;
+            margin: 0 0.75rem;
         }
 
         .parents-container {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        @media (min-width: 576px) {
-            .parents-container {
-                flex-direction: row;
-                justify-content: space-between;
-            }
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .parent-info {
-            flex: 1;
+            padding: 0.75rem;
+            background-color: rgba(248, 247, 245, 0.6);
+            border-radius: 0.5rem;
+            border: 1px solid var(--secondary-color);
         }
 
         .label {
             font-size: 0.8rem;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
             color: var(--primary-color);
             font-weight: 500;
         }
 
         .name-bold {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: bold;
             margin: 0.1rem 0;
             color: var(--primary-color);
@@ -363,7 +293,7 @@ body {
         .ceremony-title {
             font-size: 0.9rem;
             text-align: center;
-            margin: 1.25rem 0;
+            margin: 1rem 0;
             color: var(--primary-color);
             font-weight: 600;
             line-height: 1.6;
@@ -371,11 +301,15 @@ body {
 
         .couple-info {
             text-align: center;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
+            padding: 0.75rem;
+            background-color: rgba(248, 247, 245, 0.6);
+            border-radius: 0.5rem;
+            border: 1px solid var(--secondary-color);
         }
 
         .family-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             margin: 0;
             color: var(--primary-color);
@@ -383,14 +317,14 @@ body {
         }
 
         .person-name {
-            font-size: 1.75rem;
+            font-size: 1.4rem;
             font-weight: 500;
             margin: 0.25rem 0;
             color: var(--primary-color);
         }
 
         .role {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             margin: 0;
             color: var(--primary-color);
@@ -398,9 +332,9 @@ body {
         }
 
         .ceremony-info {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-align: center;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             color: var(--primary-color);
         }
 
@@ -409,7 +343,7 @@ body {
             text-align: center;
             font-weight: bold;
             color: var(--primary-color);
-            margin: 0.75rem 0;
+            margin: 0.5rem 0;
         }
 
         .lunar-date {
@@ -423,13 +357,13 @@ body {
 
         .reception-names {
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         .divider {
             width: 70%;
             height: 1px;
-            margin: 1rem auto;
+            margin: 0.75rem auto;
             background-color: var(--primary-color);
             opacity: 0.3;
         }
@@ -437,7 +371,7 @@ body {
         .reception-invite {
             font-size: 1rem;
             text-align: center;
-            margin: 1rem 0;
+            margin: 0.75rem 0;
             color: var(--primary-color);
             font-weight: 600;
         }
@@ -446,83 +380,111 @@ body {
             font-size: 0.85rem;
             text-align: center;
             line-height: 1.6;
-            margin: 1.25rem 0;
+            margin: 0.75rem 0;
             color: var(--primary-color);
         }
 
         .venue-info {
             text-align: center;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
             color: var(--primary-color);
-            line-height: 1.8;
+            line-height: 1.7;
+            padding: 0.75rem;
+            background-color: rgba(248, 247, 245, 0.6);
+            border-radius: 0.5rem;
+            border: 1px solid var(--secondary-color);
         }
 
         .venue-name {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
         }
 
         .venue-hall {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-style: italic;
         }
 
         .venue-address {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-style: italic;
             margin-top: 0.25rem;
         }
 
         .reception-date {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-align: center;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             color: var(--primary-color);
         }
 
         .reception-date-large {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             text-align: center;
             font-weight: bold;
             color: var(--primary-color);
-            margin: 0.75rem 0;
+            margin: 0.5rem 0;
         }
 
         .reception-times {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-align: center;
-            margin: 1.25rem 0;
+            margin: 1rem 0;
             line-height: 1.6;
             color: var(--primary-color);
+            padding: 0.75rem;
+            background-color: rgba(248, 247, 245, 0.6);
+            border-radius: 0.5rem;
+            border: 1px solid var(--secondary-color);
         }
 
         .final-invite {
-            font-size: 1rem;
+            font-size: 1.1rem;
             text-align: center;
             font-weight: bold;
-            margin-top: 1.5rem;
+            margin: 1rem 0 0.5rem;
             color: var(--primary-color);
         }
 
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-top: 2rem;
-            width: 100%;
-            max-width: 300px;
+        .qr-section {
+            text-align: center;
+            margin: 0 auto;
+            padding: 0.75rem;
+            background-color: rgba(248, 247, 245, 0.6);
+            border-radius: 0.5rem;
+            border: 1px solid var(--secondary-color);
+            max-width: 250px;
         }
 
-        @media (min-width: 576px) {
-            .buttons-container {
-                flex-direction: row;
-                max-width: 400px;
-            }
+        .qr-code {
+            width: 180px;
+            height: 180px;
+            margin: 0.75rem auto;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .qr-text {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .buttons-container {
+            width: 100%;
+            max-width: 320px;
+            margin: 1.5rem auto 0;
+            display: flex;
+            justify-content: center;
         }
 
         .btn {
-            flex: 1;
-            padding: 0.75rem 1.25rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             border: none;
             color: white;
@@ -553,280 +515,394 @@ body {
 
         .btn-secondary {
             background-color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
         }
 
-        /* Custom backdrop for mobile */
-        @media (max-width: 767px) {
-            .card-front-content {
-                padding: 1.5rem;
-            }
+        .btn-nav {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            min-width: 100px;
+        }
 
-            .envelope-inner {
-                width: 95%;
-                height: 95%;
-                padding: 1rem;
-            }
+        .btn-disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
-            .save-date {
-                font-size: 0.8rem;
-            }
+        .btn-disabled:hover {
+            transform: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-            .couple-name {
-                font-size: 1.75rem;
-            }
+        /* Scrollbar Styles */
+        .page::-webkit-scrollbar {
+            width: 5px;
+        }
 
-            .and {
-                font-size: 1.1rem;
-            }
+        .page::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+        }
 
-            .event-date {
-                font-size: 1.2rem;
-            }
-
-            .flower-decoration {
-                width: 35%;
-                height: 35%;
-                right: 5%;
-            }
+        .page::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 10px;
         }
 
         /* Animation effects */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .fade-in {
-            animation: fadeIn 1s ease-in-out;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* Fancy entrance animation */
+        @keyframes cardEntrance {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.8);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card-entrance {
+            animation: cardEntrance 0.8s cubic-bezier(0.27, 0.63, 0.39, 1.04);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="invitation-container fade-in">
-            <div class="invitation-card" id="invitationCard">
-                <div class="page-container" id="pageContainer">
-                    <!-- Front Cover -->
-                    <div class="card-face card-front">
-                        <div class="card-front-content">
-                            <div class="envelope-inner">
-                                <div class="save-date">Save our date</div>
-                                <div class="couple-name">NGỌC THẢO</div>
-                                <div class="and">and</div>
-                                <div class="couple-name">ANH KHOA</div>
-                                <div class="event-date">05.04.2025</div>
-                                <div class="invitation-text">Trân Trọng Kính Mời</div>
-                                
-                                <!-- Flower Decoration -->
-                                <div class="flower-decoration">
-                                    <svg viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
-                                        <g fill="none" stroke="#a53b3e" stroke-width="1" opacity="0.7">
-                                            <path d="M100,50 C120,30 140,40 150,60 C160,80 150,100 130,110 C110,120 90,110 80,90 C70,70 80,40 100,50 Z" />
-                                            <path d="M120,120 C130,110 150,110 160,120 C170,130 170,150 160,160 C150,170 130,170 120,160 C110,150 110,130 120,120 Z" />
-                                            <path d="M90,130 C100,120 110,120 120,130 C130,140 130,150 120,160 C110,170 100,170 90,160 C80,150 80,140 90,130 Z" />
-                                            <path d="M110,170 L110,240" />
-                                            <path d="M110,190 L130,210" />
-                                            <path d="M110,210 L90,230" />
-                                            <path d="M105,200 L125,185" />
-                                            <path d="M115,200 L95,185" />
-                                        </g>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- QR Code Page -->
-                    <div class="card-face qr-page">
-                        <div class="qr-content">
-                            <div class="qr-code">
-                                <div>QR Code<br>Placeholder</div>
-                            </div>
-                            <p class="qr-text">
-                                Quét mã QR để đến<br>địa điểm tổ chức đám cưới
-                            </p>
+        <div class="invitation-card" id="invitationCard">
+            <!-- Front Cover -->
+            <div class="card-face card-front">
+                <div class="card-front-content">
+                    <div class="envelope-inner">
+                        <div class="save-date">Save our date</div>
+                        <div class="couple-name">NGỌC THẢO</div>
+                        <div class="and">and</div>
+                        <div class="couple-name">ANH KHOA</div>
+                        <div class="event-date">05.04.2025</div>
+                        <div class="invitation-text">Trân Trọng Kính Mời</div>
+                        
+                        <!-- Flower Decoration -->
+                        <div class="flower-decoration">
+                            <svg viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="none" stroke="#a53b3e" stroke-width="1" opacity="0.7">
+                                    <path d="M100,50 C120,30 140,40 150,60 C160,80 150,100 130,110 C110,120 90,110 80,90 C70,70 80,40 100,50 Z" />
+                                    <path d="M120,120 C130,110 150,110 160,120 C170,130 170,150 160,160 C150,170 130,170 120,160 C110,150 110,130 120,120 Z" />
+                                    <path d="M90,130 C100,120 110,120 120,130 C130,140 130,150 120,160 C110,170 100,170 90,160 C80,150 80,140 90,130 Z" />
+                                    <path d="M110,170 L110,240" />
+                                    <path d="M110,190 L130,210" />
+                                    <path d="M110,210 L90,230" />
+                                    <path d="M105,200 L125,185" />
+                                    <path d="M115,200 L95,185" />
+                                </g>
+                            </svg>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Inside Pages -->
-                <div class="card-face card-back">
-                    <!-- Left Page - Wedding Ceremony -->
-                    <div class="page">
-                        <div class="parents-container">
-                            <div class="parent-info">
-                                <p class="label">Ông - Bà</p>
-                                <p class="name-bold">NGUYỄN TRUNG HIẾU</p>
-                                <p class="name-bold">HUỲNH KIM NGỌC</p>
-                                <p class="address">
-                                    279 Nguyễn Thị Sóc, xã Đa Phước,<br>Huyện Hóc Môn - TP HCM
-                                </p>
+            </div>
+            
+            <!-- Back with multi-page system -->
+            <div class="card-face card-back">
+                <div class="pages-container">
+                    <!-- Page 1: Wedding Ceremony -->
+                    <div class="page active" id="page1">
+                        <div class="page-content">
+                            <h3 class="section-title">Lễ Vu Quy</h3>
+                            
+                            <div class="parents-container">
+                                <div class="parent-info">
+                                    <p class="label">Ông - Bà</p>
+                                    <p class="name-bold">NGUYỄN TRUNG HIẾU</p>
+                                    <p class="name-bold">HUỲNH KIM NGỌC</p>
+                                    <p class="address">
+                                        279 Nguyễn Thị Sóc, xã Đa Phước,<br>Huyện Hóc Môn - TP HCM
+                                    </p>
+                                </div>
+                                <div class="parent-info">
+                                    <p class="label">Ông - Bà</p>
+                                    <p class="name-bold">TRẦN THANH SANG</p>
+                                    <p class="name-bold">NGUYỄN THỊ THU THẢO</p>
+                                    <p class="address">
+                                        299 Trần Văn Giàu, ấp 3A, xã Tân Thạnh Tây,<br>Huyện Củ Chi, TP HCM
+                                    </p>
+                                </div>
                             </div>
-                            <div class="parent-info">
-                                <p class="label">Ông - Bà</p>
-                                <p class="name-bold">TRẦN THANH SANG</p>
-                                <p class="name-bold">NGUYỄN THỊ THU THẢO</p>
-                                <p class="address">
-                                    299 Trần Văn Giàu, ấp 3A, xã Tân Thạnh Tây,<br>Huyện Củ Chi, TP HCM
-                                </p>
+                            
+                            <h4 class="ceremony-title">
+                                TRÂN TRỌNG BÁO TIN LỄ VU QUY<br>CỦA HAI CON CHÚNG TÔI
+                            </h4>
+                            
+                            <div class="couple-info">
+                                <p class="family-label">NGUYỄN HUỲNH</p>
+                                <p class="person-name">NGỌC THẢO</p>
+                                <p class="role">TRƯỞNG NỮ</p>
+                                
+                                <div class="and">and</div>
+                                
+                                <p class="family-label">TRẦN</p>
+                                <p class="person-name">ANH KHOA</p>
+                                <p class="role">ÚT NAM</p>
                             </div>
+                            
+                            <p class="ceremony-info">
+                                HÔN LỄ ĐƯỢC CỬ HÀNH TẠI TƯ GIA
+                            </p>
+                            <p class="time-bold">
+                                VÀO LÚC: 09 GIỜ 00
+                            </p>
+                            <p class="time-bold">
+                                NGÀY 05 THÁNG 04 NĂM 2025
+                            </p>
+                            <p class="lunar-date">
+                                (Nhằm ngày 09 tháng 03 năm Ất Tỵ)
+                            </p>
                         </div>
                         
-                        <h4 class="ceremony-title">
-                            TRÂN TRỌNG BÁO TIN LỄ VU QUY<br>CỦA HAI CON CHÚNG TÔI
-                        </h4>
-                        
-                        <div class="couple-info">
-                            <p class="family-label">NGUYỄN HUỲNH</p>
-                            <p class="person-name">NGỌC THẢO</p>
-                            <p class="role">TRƯỞNG NỮ</p>
-                            
-                            <div class="and">and</div>
-                            
-                            <p class="family-label">TRẦN</p>
-                            <p class="person-name">ANH KHOA</p>
-                            <p class="role">ÚT NAM</p>
+                        <div class="page-navigation">
+                            <button class="btn btn-secondary btn-nav btn-disabled" id="prevBtn1" disabled>
+                                <i class="fas fa-chevron-left"></i> Trở lại
+                            </button>
+                            <button class="btn btn-secondary btn-nav" id="nextBtn1">
+                                Tiếp theo <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                         
-                        <p class="ceremony-info">
-                            HÔN LỄ ĐƯỢC CỬ HÀNH TẠI TƯ GIA
-                        </p>
-                        <p class="time-bold">
-                            VÀO LÚC: 09 GIỜ 00
-                        </p>
-                        <p class="time-bold">
-                            NGÀY 05 THÁNG 04 NĂM 2025
-                        </p>
-                        <p class="lunar-date">
-                            (Nhằm ngày 09 tháng 03 năm Ất Tỵ)
-                        </p>
+                        <div class="page-dots">
+                            <div class="page-dot active" data-page="1"></div>
+                            <div class="page-dot" data-page="2"></div>
+                            <div class="page-dot" data-page="3"></div>
+                        </div>
                     </div>
                     
-                    <!-- Right Page - Reception -->
-                    <div class="page">
-                        <div class="reception-names">
-                            <h3 class="person-name">NGỌC THẢO</h3>
-                            <div class="and">and</div>
-                            <h3 class="person-name">ANH KHOA</h3>
+                    <!-- Page 2: Reception -->
+                    <div class="page right" id="page2">
+                        <div class="page-content">
+                            <h3 class="section-title">Tiệc Cưới</h3>
+                            
+                            <div class="reception-names">
+                                <h3 class="person-name">NGỌC THẢO</h3>
+                                <div class="and">and</div>
+                                <h3 class="person-name">ANH KHOA</h3>
+                            </div>
+                            
+                            <div class="divider"></div>
+                            
+                            <p class="reception-invite">
+                                TRÂN TRỌNG KÍNH MỜI
+                            </p>
+                            
+                            <p class="reception-message">
+                                ĐẾN DỰ BUỔI TIỆC RƯỢU<br>
+                                CHUNG VUI CÙNG GIA ĐÌNH CHÚNG TÔI
+                            </p>
+                            
+                            <div class="venue-info">
+                                TẠI: <span class="venue-name">HUỲNH THẢO CENTER</span><br>
+                                <span class="venue-hall">(SẢNH 02)</span><br>
+                                <span class="venue-address">
+                                    114 LÊ THỊ HÀ, XÃ TÂN XUÂN<br>
+                                    HÓC MÔN, TPHCM
+                                </span>
+                            </div>
+                            
+                            <p class="reception-date">
+                                VÀO LÚC: 18 GIỜ 30, THỨ BẢY
+                            </p>
+                            <p class="reception-date-large">
+                                05.04.2025
+                            </p>
+                            <p class="lunar-date">
+                                (Nhằm ngày 08 tháng 03 năm Ất Tỵ)
+                            </p>
+                            
+                            <div class="reception-times">
+                                <p>Đón Khách: 17h00</p>
+                                <p>Khai Tiệc: 19h00</p>
+                            </div>
+                            
+                            <p class="final-invite">
+                                Kính mời!
+                            </p>
                         </div>
                         
-                        <div class="divider"></div>
-                        
-                        <p class="reception-invite">
-                            TRÂN TRỌNG KÍNH MỜI
-                        </p>
-                        
-                        <p class="reception-message">
-                            ĐẾN DỰ BUỔI TIỆC RƯỢU<br>
-                            CHUNG VUI CÙNG GIA ĐÌNH CHÚNG TÔI
-                        </p>
-                        
-                        <div class="venue-info">
-                            TẠI: <span class="venue-name">HUỲNH THẢO CENTER</span><br>
-                            <span class="venue-hall">(SẢNH 02)</span><br>
-                            <span class="venue-address">
-                                114 LÊ THỊ HÀ, XÃ TÂN XUÂN<br>
-                                HÓC MÔN, TPHCM
-                            </span>
+                        <div class="page-navigation">
+                            <button class="btn btn-secondary btn-nav" id="prevBtn2">
+                                <i class="fas fa-chevron-left"></i> Trở lại
+                            </button>
+                            <button class="btn btn-secondary btn-nav" id="nextBtn2">
+                                Tiếp theo <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                         
-                        <p class="reception-date">
-                            VÀO LÚC: 18 GIỜ 30, THỨ BẢY
-                        </p>
-                        <p class="reception-date-large">
-                            05.04.2025
-                        </p>
-                        <p class="lunar-date">
-                            (Nhằm ngày 08 tháng 03 năm Ất Tỵ)
-                        </p>
-                        
-                        <div class="reception-times">
-                            Đón Khách: 17h00<br>
-                            Khai Tiệc: 19h00
+                        <div class="page-dots">
+                            <div class="page-dot" data-page="1"></div>
+                            <div class="page-dot active" data-page="2"></div>
+                            <div class="page-dot" data-page="3"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Page 3: QR Code -->
+                    <div class="page right" id="page3">
+                        <div class="page-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100% - 100px);">
+                            <h3 class="section-title">Địa Chỉ</h3>
+                            
+                            <div class="qr-section">
+                                <div class="qr-code">
+                                    <div>QR Code<br>Placeholder</div>
+                                </div>
+                                <p class="qr-text">
+                                    Quét mã QR để đến<br>địa điểm tổ chức đám cưới
+                                </p>
+                            </div>
+                            
+                            <div style="margin-top: 2rem; text-align: center;">
+                                <div class="reception-names">
+                                    <h3 class="person-name">NGỌC THẢO</h3>
+                                    <div class="and">and</div>
+                                    <h3 class="person-name">ANH KHOA</h3>
+                                </div>
+                                <p style="color: var(--primary-color); margin-top: 1rem; font-style: italic;">
+                                    Hân hạnh được đón tiếp
+                                </p>
+                            </div>
                         </div>
                         
-                        <p class="final-invite">
-                            Kính mời!
-                        </p>
+                        <div class="page-navigation">
+                            <button class="btn btn-secondary btn-nav" id="prevBtn3">
+                                <i class="fas fa-chevron-left"></i> Trở lại
+                            </button>
+                            <button class="btn btn-secondary btn-nav btn-disabled" id="nextBtn3" disabled>
+                                Tiếp theo <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="page-dots">
+                            <div class="page-dot" data-page="1"></div>
+                            <div class="page-dot" data-page="2"></div>
+                            <div class="page-dot active" data-page="3"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Navigation buttons -->
+        <!-- Toggle Card Button -->
         <div class="buttons-container">
-            <button id="toggleOpenBtn" class="btn btn-primary">
+            <button id="toggleCardBtn" class="btn btn-primary">
                 <i class="fas fa-envelope-open"></i> Mở thiệp
-            </button>
-            
-            <button id="toggleQRBtn" class="btn btn-secondary">
-                <i class="fas fa-qrcode"></i> Quét mã QR
             </button>
         </div>
     </div>
 
     <script>
-        // Get DOM elements
-        const invitationCard = document.getElementById('invitationCard');
-        const pageContainer = document.getElementById('pageContainer');
-        const toggleOpenBtn = document.getElementById('toggleOpenBtn');
-        const toggleQRBtn = document.getElementById('toggleQRBtn');
-        
-        // State variables
-        let isOpen = false;
-        let showQR = false;
-        
-        // Toggle open function
-        function toggleOpen() {
-            isOpen = !isOpen;
-            
-            if (isOpen) {
-                invitationCard.classList.add('open');
-                toggleOpenBtn.innerHTML = '<i class="fas fa-envelope"></i> Đóng thiệp';
-            } else {
-                invitationCard.classList.remove('open');
-                toggleOpenBtn.innerHTML = '<i class="fas fa-envelope-open"></i> Mở thiệp';
-            }
-            
-            if (showQR) {
-                showQR = false;
-                pageContainer.classList.remove('show-qr');
-                toggleQRBtn.innerHTML = '<i class="fas fa-qrcode"></i> Quét mã QR';
-            }
-        }
-        
-        // Toggle QR function
-        function toggleQR() {
-            showQR = !showQR;
-            
-            if (showQR) {
-                pageContainer.classList.add('show-qr');
-                toggleQRBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Đóng mã QR';
-            } else {
-                pageContainer.classList.remove('show-qr');
-                toggleQRBtn.innerHTML = '<i class="fas fa-qrcode"></i> Quét mã QR';
-            }
-            
-            if (isOpen) {
-                isOpen = false;
-                invitationCard.classList.remove('open');
-                toggleOpenBtn.innerHTML = '<i class="fas fa-envelope-open"></i> Mở thiệp';
-            }
-        }
-        
-        // Add event listeners
-        toggleOpenBtn.addEventListener('click', toggleOpen);
-        toggleQRBtn.addEventListener('click', toggleQR);
-
-        // Add fade-in animation to elements
         document.addEventListener('DOMContentLoaded', function() {
-            const elements = document.querySelectorAll('.fade-in');
-            elements.forEach(element => {
-                element.style.opacity = '0';
-                setTimeout(() => {
-                    element.style.opacity = '1';
-                }, 100);
+            // DOM Elements
+            const invitationCard = document.getElementById('invitationCard');
+            const toggleCardBtn = document.getElementById('toggleCardBtn');
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const page3 = document.getElementById('page3');
+            const pages = [page1, page2, page3];
+            
+            // Navigation buttons
+            const nextBtn1 = document.getElementById('nextBtn1');
+            const prevBtn2 = document.getElementById('prevBtn2');
+            const nextBtn2 = document.getElementById('nextBtn2');
+            const prevBtn3 = document.getElementById('prevBtn3');
+            
+            // Page dots
+            const pageDots = document.querySelectorAll('.page-dot');
+            
+            // State
+            let isOpen = false;
+            let currentPage = 1;
+            
+            // Toggle card open/close
+            toggleCardBtn.addEventListener('click', function() {
+                isOpen = !isOpen;
+                
+                if (isOpen) {
+                    invitationCard.classList.add('open');
+                    toggleCardBtn.innerHTML = '<i class="fas fa-envelope"></i> Đóng thiệp';
+                } else {
+                    invitationCard.classList.remove('open');
+                    toggleCardBtn.innerHTML = '<i class="fas fa-envelope-open"></i> Mở thiệp';
+                }
             });
+            
+            // Page navigation
+            function goToPage(pageNumber) {
+                if (pageNumber === currentPage) return;
+                
+                const oldPage = pages[currentPage - 1];
+                const newPage = pages[pageNumber - 1];
+                
+                if (pageNumber > currentPage) {
+                    // Going right
+                    oldPage.classList.remove('active');
+                    oldPage.classList.add('left');
+                    
+                    newPage.classList.remove('right');
+                    newPage.classList.add('active');
+                } else {
+                    // Going left
+                    oldPage.classList.remove('active');
+                    oldPage.classList.add('right');
+                    
+                    newPage.classList.remove('left');
+                    newPage.classList.add('active');
+                }
+                
+                // Update active dot
+                pageDots.forEach((dot, index) => {
+                    if (index + 1 === pageNumber) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+                
+                currentPage = pageNumber;
+            }
+            
+            // Event listeners for navigation buttons
+            nextBtn1.addEventListener('click', function() {
+                goToPage(2);
+            });
+            
+            prevBtn2.addEventListener('click', function() {
+                goToPage(1);
+            });
+            
+            nextBtn2.addEventListener('click', function() {
+                goToPage(3);
+            });
+            
+            prevBtn3.addEventListener('click', function() {
+                goToPage(2);
+            });
+            
+            // Event listeners for dots
+            pageDots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const pageNum = parseInt(this.getAttribute('data-page'));
+                    goToPage(pageNum);
+                });
+            });
+            
+            // Add entrance animation
+            setTimeout(() => {
+                invitationCard.classList.add('card-entrance');
+            }, 100);
         });
     </script>
 </body>
