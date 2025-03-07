@@ -322,7 +322,7 @@
                 </div>
             </div>
 
-            <!-- Page 3: Inside Right -->
+           <!-- Page 3: Inside Right -->
             <div class="page" id="page-3">
                 <div class="page-content">
                     <div class="reception">
@@ -389,15 +389,13 @@
         <div class="page-indicators">
             <div class="indicator" data-page="1"></div>
             <div class="indicator" data-page="2"></div>
-            <div class="indicator active" data-page="3"></div>
+            <div class="indicator" data-page="3"></div>
             <div class="indicator" data-page="4"></div>
         </div>
     </div>
 
     <!-- Thêm thư viện QRCode.js -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const pages = document.querySelectorAll('.page');
@@ -413,7 +411,7 @@
             const totalPages = pages.length;
             
             // Map URL when QR is clicked
-            const mapUrl = "https://goo.gl/maps/example"; // Replace with actual map URL
+            const mapUrl = "https://maps.app.goo.gl/5tvGG48euzNCs4b88";
             
             // Create falling petals
             function createPetals() {
@@ -661,5 +659,5 @@
             }, 3000);
         });
     </script>
-</body>
+    </body>
 </html>
