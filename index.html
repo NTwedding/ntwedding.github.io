@@ -845,115 +845,6 @@
                         </div>
                         
                         <div class="page-dots">
-                            <div class="page-dot active" data-page="1"></div>
-                            <div class="page-dot" data-page="2"></div>
-                            <div class="page-dot" data-page="3"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Page 2: Reception -->
-                    <div class="page right" id="page2">
-                        <div class="page-content">
-                            <h3 class="section-title">Tiệc Cưới</h3>
-                            
-                            <div class="reception-names">
-                                <h3 class="person-name">NGỌC THẢO</h3>
-                                <div class="and">and</div>
-                                <h3 class="person-name">ANH KHOA</h3>
-                            </div>
-                            
-                            <div class="divider"></div>
-                            
-                            <p class="reception-invite">
-                                TRÂN TRỌNG KÍNH MỜI
-                            </p>
-                            
-                            <p class="reception-message">
-                                ĐẾN DỰ BUỔI TIỆC RƯỢU<br>
-                                CHUNG VUI CÙNG GIA ĐÌNH CHÚNG TÔI
-                            </p>
-                            
-                            <div class="venue-info">
-                                TẠI: <span class="venue-name">HUỲNH THẢO CENTER</span><br>
-                                <span class="venue-hall">(SẢNH 02)</span><br>
-                                <span class="venue-address">
-                                    114 LÊ THỊ HÀ, XÃ TÂN XUÂN<br>
-                                    HÓC MÔN, TPHCM
-                                </span>
-                            </div>
-                            
-                            <p class="reception-date">
-                                VÀO LÚC: 18 GIỜ 30, THỨ BẢY
-                            </p>
-                            <p class="reception-date-large">
-                                05.04.2025
-                            </p>
-                            <p class="lunar-date">
-                                (Nhằm ngày 08 tháng 03 năm Ất Tỵ)
-                            </p>
-                            
-                            <div class="reception-times">
-                                <p>Đón Khách: 17h00</p>
-                                <p>Khai Tiệc: 19h00</p>
-                            </div>
-                            
-                            <p class="final-invite">
-                                Kính mời!
-                            </p>
-                        </div>
-                        
-                        <div class="page-navigation">
-                            <button class="btn btn-secondary btn-nav" id="prevBtn2">
-                                <i class="fas fa-chevron-left"></i> Trở lại
-                            </button>
-                            <button class="btn btn-secondary btn-nav" id="nextBtn2">
-                                Tiếp theo <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="page-dots">
-                            <div class="page-dot" data-page="1"></div>
-                            <div class="page-dot active" data-page="2"></div>
-                            <div class="page-dot" data-page="3"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Page 3: QR Code -->
-                    <div class="page right" id="page3">
-                        <div class="page-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100% - 100px);">
-                            <h3 class="section-title">Địa Chỉ</h3>
-                            
-                            <div class="qr-section">
-                                <div class="qr-code">
-                                    <div>QR Code<br>Placeholder</div>
-                                </div>
-                                <p class="qr-text">
-                                    Quét mã QR để đến<br>địa điểm tổ chức đám cưới
-                                </p>
-                            </div>
-                            
-                            <div style="margin-top: 2rem; text-align: center;">
-                                <div class="reception-names">
-                                    <h3 class="person-name">NGỌC THẢO</h3>
-                                    <div class="and">and</div>
-                                    <h3 class="person-name">ANH KHOA</h3>
-                                </div>
-                                <p style="color: var(--primary-color); margin-top: 1rem; font-style: italic;">
-                                    Hân hạnh được đón tiếp
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div class="page-navigation">
-                            <button class="btn btn-secondary btn-nav" id="prevBtn3">
-                                <i class="fas fa-chevron-left"></i> Trở lại
-                            </button>
-                            <button class="btn btn-secondary btn-nav btn-disabled" id="nextBtn3" disabled>
-                                Tiếp theo <i class="fas fa-chevron-right"></i>
-                            </button>
-                        </div>
-                        
-                        <div class="page-dots">
                             <div class="page-dot" data-page="1"></div>
                             <div class="page-dot" data-page="2"></div>
                             <div class="page-dot active" data-page="3"></div>
@@ -1004,6 +895,11 @@
                 } else {
                     invitationCard.classList.remove('open');
                     toggleCardBtn.innerHTML = '<i class="fas fa-envelope-open"></i> Mở thiệp';
+                    
+                    // Reset to page 1 when closing the card
+                    setTimeout(() => {
+                        goToPage(1);
+                    }, 600);
                 }
             });
             
@@ -1040,6 +936,11 @@
                 });
                 
                 currentPage = pageNumber;
+                
+                // Scroll to top of the page when navigating
+                setTimeout(() => {
+                    newPage.scrollTop = 0;
+                }, 100);
             }
             
             // Event listeners for navigation buttons
@@ -1071,15 +972,39 @@
             setTimeout(() => {
                 invitationCard.classList.add('card-entrance');
             }, 100);
+            
+            // Fix for mobile viewport height issues
+            function setViewportHeight() {
+                document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+                
+                // Adjust card height based on viewport
+                const viewportHeight = window.innerHeight;
+                invitationCard.style.height = `${viewportHeight * 0.85}px`;
+            }
+            
+            // Set initial viewport height
+            setViewportHeight();
+            
+            // Update on resize and orientation change
+            window.addEventListener('resize', setViewportHeight);
+            window.addEventListener('orientationchange', setViewportHeight);
+            
+            // Fix for iOS Safari scrolling issues
+            pages.forEach(page => {
+                page.addEventListener('touchstart', function() {
+                    const top = page.scrollTop;
+                    const totalScroll = page.scrollHeight;
+                    const currentScroll = top + page.offsetHeight;
+                    
+                    // If we're at the top or bottom, prevent default to stop iOS bouncing
+                    if(top === 0) {
+                        page.scrollTop = 1;
+                    } else if(currentScroll === totalScroll) {
+                        page.scrollTop = top - 1;
+                    }
+                });
+            });
         });
-        window.addEventListener('resize', function() {
-    const invitationCard = document.getElementById('invitationCard');
-    const windowHeight = window.innerHeight;
-    const windowWidth = window.innerWidth;
-
-    invitationCard.style.height = `${windowHeight}px`;
-    invitationCard.style.width = `${windowWidth}px`;
-});
     </script>
 </body>
 </html>
